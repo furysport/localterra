@@ -48,7 +48,4 @@ CMD fanfuryd start \
     --minimum-gas-prices 0.015uluna \
     --moniker fury-1 \
     --p2p.upnp true \
-    --rpc.laddr tcp://0.0.0.0:26657 \
-    --api.enable true \
-    --api.swagger true \
-    --api.enabled-unsafe-cors true 
+    --rpc.laddr tcp://0.0.0.0:26657

@@ -1,13 +1,11 @@
 version: "3.8"
 
 services:
-  terrad:
+  fanfuryd:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        TERRA_VERSION: ${TERRA_VERSION}
-    image: docker.io/fanfury/localterra:${TERRA_VERSION}
+    image: docker.io/fanfury/localterra:0.2.0
     hostname: fanfuryd
     pull_policy: always
     volumes:
