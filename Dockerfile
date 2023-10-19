@@ -1,4 +1,4 @@
-ARG TERRA_VERSION=0.1.0
+ARG TERRA_VERSION=0.2.0
 
 FROM docker.io/fanfury/fury-1:${TERRA_VERSION}
 
@@ -10,16 +10,14 @@ COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN apk add --no-cache nginx && \
     mkdir -p /var/lib/nginx/logs && \
-    chown -R terra:terra /var/lib/nginx  && \
     ln -sf /dev/stdout /var/lib/nginx/logs/access.log && \
     ln -sf /dev/stderr /var/lib/nginx/logs/error.log
 
-# Setup for localterra
+# Setup for fanfury
 RUN set -eux &&\
     mkdir -p /app/config && \
     mkdir -p /app/data && \
-    chown -R terra:terra /app && \
-    terrad init Fanfury --home /app --chain-id fury-1 && \
+    fanfuryd init fury --home /app --chain-id fury-1 && \
     echo '{"height": "0","round": 0,"step": 0}' > /app/data/priv_validator_state.json && \
     sed -e '/^\[api\]/,/\[rosetta\]/ s|^enable *=.*|enable = true|' \
         -e '/^\[api\]/,/\[rosetta\]/ s|^swagger *=.*|swagger = true|' \ 
@@ -47,8 +45,8 @@ EXPOSE 26657
 
 CMD fanfuryd start \
     --home /app \
-    --minimum-gas-prices 0.015ufury \
-    --moniker fanfury \
+    --minimum-gas-prices 0.015uluna \
+    --moniker fury-1 \
     --p2p.upnp true \
     --rpc.laddr tcp://0.0.0.0:26657 \
     --api.enable true \
