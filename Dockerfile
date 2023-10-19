@@ -1,6 +1,6 @@
-ARG TERRA_VERSION=2.4.1
+ARG TERRA_VERSION=0.1.0
 
-FROM ghcr.io/terra-money/core:${TERRA_VERSION}
+FROM docker.io/fanfury/fury-1:${TERRA_VERSION}
 
 # Set up fo nginx
 USER root
@@ -19,7 +19,7 @@ RUN set -eux &&\
     mkdir -p /app/config && \
     mkdir -p /app/data && \
     chown -R terra:terra /app && \
-    terrad init localterra --home /app --chain-id localterra && \
+    terrad init Fanfury --home /app --chain-id fury-1 && \
     echo '{"height": "0","round": 0,"step": 0}' > /app/data/priv_validator_state.json && \
     sed -e '/^\[api\]/,/\[rosetta\]/ s|^enable *=.*|enable = true|' \
         -e '/^\[api\]/,/\[rosetta\]/ s|^swagger *=.*|swagger = true|' \ 
@@ -45,10 +45,10 @@ EXPOSE 26656
 # tendermint rpc
 EXPOSE 26657
 
-CMD terrad start \
+CMD fanfuryd start \
     --home /app \
-    --minimum-gas-prices 0.015uluna \
-    --moniker localterra \
+    --minimum-gas-prices 0.015ufury \
+    --moniker fanfury \
     --p2p.upnp true \
     --rpc.laddr tcp://0.0.0.0:26657 \
     --api.enable true \

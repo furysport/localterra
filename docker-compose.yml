@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
       args:
         TERRA_VERSION: ${TERRA_VERSION}
-    image: ghcr.io/terra-money/localterra:${TERRA_VERSION}
-    hostname: terrad
+    image: docker.io/fanfury/localterra:${TERRA_VERSION}
+    hostname: fanfuryd
     pull_policy: always
     volumes:
       - terra:/app
